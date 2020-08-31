@@ -1,0 +1,22 @@
+{
+  "name": "contact-backend",
+  "version": "1.0.0",
+  "description": "Contact API",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server",
+    "server": "nodemon server"
+  },
+  "author": "Cameron LaVallie",
+  "license": "MIT",
+  "dependencies": {
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "handlebars": "^4.7.6",
+    "mongoose": "^5.10.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
