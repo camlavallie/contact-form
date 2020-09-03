@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator');
 
 const Contact = require('../../models/Contact');
+
 // @route   GET api/contact
 // @desc    GET all contact
 //@access   Public
 router.get('/', async (req, res) => {
   try {
+    // const contacts = await Contact.find().sort({ date: -1 });
+    // res.json(contacts);
+    res.send('get req');
     console.log('get req');
   } catch (err) {
     console.error(err.message);
@@ -20,7 +24,8 @@ router.get('/', async (req, res) => {
 //@access   Public
 router.get('/:id', async (req, res) => {
   try {
-    console.log('get by id req');
+    res.send('get id req');
+    console.log('get id req');
   } catch (err) {
     console.error(err.message);
     res.send(500).send('Server error');
