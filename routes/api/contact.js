@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
+const {
+  check,
+  validationResult
+} = require('express-validator');
 
 const Contact = require('../../models/Contact');
 
@@ -9,8 +12,10 @@ const Contact = require('../../models/Contact');
 //@access   Public
 router.get('/', async (req, res) => {
   try {
-    // const contacts = await Contact.find().sort({ date: -1 });
-    // res.json(contacts);
+    const contacts = await Contact.find().sort({
+      date: -1
+    });
+    res.json(contacts);
     res.send('get req');
     console.log('get req');
   } catch (err) {
@@ -40,7 +45,11 @@ router.post(
     check('message', 'Please leave a message').not().isEmpty(),
   ],
   async (req, res) => {
-    const { name, email, message } = req.body;
+    const {
+      name,
+      email,
+      message
+    } = req.body;
     let contact = await Contact({
       name,
       message,
