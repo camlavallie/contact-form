@@ -1,44 +1,67 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const {
-  check,
-  validationResult
-} = require('express-validator/check')
+const { check, validationResult } = require('express-validator');
 
 const Contact = require('../../models/Contact');
 
-router.post('/', [
-  check('name', 'Name is required').not().isEmpty(),
-  check('email', 'Please enter valid email').isEmail(),
-  check('message', 'Please leave a message').not().isEmpty()
-], async (req, res) => {
-  const {
-    name,
-    email,
-    message
-  } = req.body;
-  let contact = await Contact({
-    name,
-    message,
-    email
-  })
-  contact = new Contact({
-    name,
-    email,
-    message
-  });
-
-  await contact.save();
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errorrs: errors.array()
-    });
+// @route   GET api/contact
+// @desc    GET all contact
+//@access   Public
+router.get('/', async (req, res) => {
+  try {
+    // const contacts = await Contact.find().sort({ date: -1 });
+    // res.json(contacts);
+    res.send('get req');
+    console.log('get req');
+  } catch (err) {
+    console.error(err.message);
+    res.send(500).send('Server error');
   }
-  console.log(req.body)
-  res.send('contact route')
+});
 
-})
+// @route   GET api/contact/:id
+// @desc    GET contact by id
+//@access   Public
+router.get('/:id', async (req, res) => {
+  try {
+    res.send('get id req');
+    console.log('get id req');
+  } catch (err) {
+    console.error(err.message);
+    res.send(500).send('Server error');
+  }
+});
 
+router.post(
+  '/',
+  [
+    check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please enter valid email').isEmail(),
+    check('message', 'Please leave a message').not().isEmpty(),
+  ],
+  async (req, res) => {
+    const { name, email, message } = req.body;
+    let contact = await Contact({
+      name,
+      message,
+      email,
+    });
+    contact = new Contact({
+      name,
+      email,
+      message,
+    });
+
+    await contact.save();
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errorrs: errors.array(),
+      });
+    }
+    console.log(req.body);
+    res.send('contact route');
+  }
+);
 
 module.exports = router;
